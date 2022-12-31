@@ -14,7 +14,8 @@ public static int jumlahData = 0;
         System.out.println("4. Cari Data");
         System.out.println("5. Edit Data");
         System.out.println("6. Hapus Data");
-        System.out.println("7. Keluar");
+        System.out.println("7. UAS");
+        System.out.println("8. Keluar");
         System.out.print("Silahkan pilih menu: ");
         pilihan = scan.nextInt();
     scan.nextLine();
@@ -313,6 +314,39 @@ public static int jumlahData = 0;
         arr[low] = arr[pivot];
         arr[pivot] = tmp;
     }
+
+    public static String uas() {
+        int jarak = jumlahData;
+        int susut = 13;
+        int urut = 0;
+        Mahasiswa temp;
+
+        if(jumlahData != 0) {
+            do {
+                jarak = (jarak * 10) / susut;
+
+                if(jarak <= 1) {
+                    jarak = 1;
+                    urut = 1;
+                } 
+
+                for(int i = 0; (i + jarak) < jumlahData; i++) {
+                    if(mahasiswa[i].getNim() > mahasiswa[i + jarak].getNim()) {
+                        temp = mahasiswa[i];
+                        mahasiswa[i]=mahasiswa[i+jarak];
+                        mahasiswa[i+jarak]=temp;
+                        urut = 0;
+                    }
+                }
+            } while(urut == 0);
+        } else {
+            return "Tidak Ada Data";
+        }
+
+       return  "Data telah diurutkan, silakan tampilkan data!";
+       
+    }
+
     public static void main(String[] args) {
         while(true) {
             pilihMenu();
@@ -336,6 +370,10 @@ public static int jumlahData = 0;
             hapusData();
             break;
             case 7:
+            String pesan = uas();
+            System.out.println("\n" + pesan);
+            break;
+            case 8:
             System.exit(0);
             break;
             default:
