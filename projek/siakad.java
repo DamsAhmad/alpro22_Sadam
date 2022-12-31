@@ -11,11 +11,15 @@ public static int jumlahData = 0;
         System.out.println("1. Tambah Data Mahasiswa");
         System.out.println("2. Lihat Data Mahasiswa");
         System.out.println("3. Urutkan Data");
-        System.out.println("4. Keluar");
+        System.out.println("4. Cari Data");
+        System.out.println("5. Edit Data");
+        System.out.println("6. Hapus Data");
+        System.out.println("7. Keluar");
         System.out.print("Silahkan pilih menu: ");
         pilihan = scan.nextInt();
     scan.nextLine();
     }
+    
     public static void tambahData(){
         System.out.println("\n1. Silahkan Tambah Data");
         
@@ -30,31 +34,133 @@ public static int jumlahData = 0;
         char yn = scan.next().charAt(0);
         if(yn != 'y') {
             break;
-        }
+            }
+        }   
     }
-}
     public static void lihatData(){
         System.out.println("\n2. Lihat Data ");
         System.out.println("Berikut Data Anda");
         int i = 0;
         while(i<jumlahData){
+            System.out.println("--------------------------------------"); 
             System.out.println("\nnama:" + mahasiswa[i].getNama()); 
             System.out.println("nim:" + mahasiswa[i].getNim()); 
+            System.out.println("--------------------------------------"); 
             i++;
         }
     }
+
+    public static void editData() {
+
+    }
+
+    public static void hapusData() {
+
+    }
+
+
+    public static void cariData() {
+        int search;
+        System.out.println("--------------------------------------"); 
+        System.out.print("\nNIM yang ingin dicari: ");
+        System.out.println("--------------------------------------"); 
+        search = scan.nextInt();
+        int pilih;
+        System.out.println("\n### Pilih Algoritma Pencarian ###");
+        System.out.println("1. Binary Search");
+        System.out.println("2. Linear Search");
+        System.out.print("Silahkan pilih algoritma: ");
+        pilih = scan.nextInt();
+        switch(pilih){
+            case 1:
+            binarySearch(search);
+            break;
+            case 2:
+            linearSearch(search);
+            break;
+        }
+    }
+
+    public static void linearSearch(int search) {
+        int result = algoLinearSearch(mahasiswa, search);
+        if (result == -1){
+            System.out.println("Data Tidak Ada");
+           }
+           else{
+            System.out.println("--------------------------------------"); 
+            System.out.println("\nData Yang Anda Cari :"); 
+            System.out.println("\nnama:" + mahasiswa[result].getNama()); 
+            System.out.println("nim:" + mahasiswa[result].getNim()); 
+            System.out.println("--------------------------------------"); 
+           }
+    }
+
+    public static int algoLinearSearch(Mahasiswa[] arr, int x) {
+        for (int i = 0; i<arr.length; i++){
+            if (arr[i].getNim()==x){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static void binarySearch(int search){
+       int result = algoBinarySearch(mahasiswa, jumlahData-1, 0, search);
+       if (result == -1){
+        System.out.println("Data Tidak Ada");
+       }
+       else{
+        System.out.println("--------------------------------------"); 
+        System.out.println("\nData Yang Anda Cari :"); 
+        System.out.println("\nnama:" + mahasiswa[result].getNama()); 
+        System.out.println("nim:" + mahasiswa[result].getNim()); 
+        System.out.println("--------------------------------------"); 
+       }
+    }
+
+    public static int algoBinarySearch(Mahasiswa[] arr, int r, int l, int x) {
+        if (r>=l){
+            int mid = (l + r)/2;
+            if (arr[mid].getNim()==x){
+                return mid;
+            }
+            if (arr[mid].getNim()>x){
+                return algoBinarySearch(arr, mid-1, l, x );
+            }
+            return algoBinarySearch(arr, r, mid+1, x);
+        }
+        return -1;
+    }
+
     public static void urutkanData() {
     int pilih;
         System.out.println("\n### Pilih Algoritma Pengurutan ###");
         System.out.println("1. Exchange Sort");
+        System.out.println("2. Selection Sort");
+        System.out.println("3. Quick Sort");
+        System.out.println("4. Bubble Sort");
+        System.out.println("5. Shell Sort");
         System.out.print("Silahkan pilih algoritma: ");
         pilih = scan.nextInt();
         switch(pilih){
             case 1:
             exchangeSort();
             break;
+            case 2:
+            selectionSort();
+            break;
+            case 3:
+            quickSort(mahasiswa, 0, jumlahData-1);
+            break;
+            case 4:
+            bubbleSort(mahasiswa);
+            break;
+            case 5:
+            shellSort(mahasiswa);
+            break;
         }
-     }
+    }
+
     public static void exchangeSort(){
         // mahasiswa[jumlahData] = new Mahasiswa();
         for (int x =0; x<jumlahData; x++){
@@ -63,28 +169,114 @@ public static int jumlahData = 0;
                     Mahasiswa temp = mahasiswa[x];
                     mahasiswa[x] = mahasiswa[y];
                     mahasiswa[y] = temp;
+                }
             }
         }
     }
+
+    public static void selectionSort(){
+        int i, j;   
+        int n=mahasiswa.length;
+        for(i=0; i< n-1;i++){
+            //Find the current min item
+            int currMin = i;
+            for (j=i+1; j<n; j++){
+                if(mahasiswa[j] == null){
+                    continue;
+                }
+                if(mahasiswa[j].getNim() < mahasiswa[currMin].getNim()){
+                    currMin=j;
+                }            
+            //swap the found current min with the first item
+            Mahasiswa temp = mahasiswa[currMin];   
+            mahasiswa[currMin] = mahasiswa[i]; 
+            mahasiswa[i]=temp;
+            }
+        }
+    }
+
+    public static void bubbleSort(Mahasiswa[] arr){
+        int n = arr.length;
+        for (int i=0; i<n-1;i++){
+            for (int j=0; j<n-i; j++){
+                if(arr[j] == null){
+                    continue;
+                }
+                if(arr[j+1] == null){
+                    continue;
+                }
+                if (arr[j].getNim()>arr[j+1].getNim()){
+                    Mahasiswa temp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1]=temp;
+                }
+            }
+        }
+    }
+
+    public static void shellSort(Mahasiswa[] arr) {
+        int n = arr.length;
+        for (int gap = n/2; gap > 0; gap/=2){
+            for (int i = gap; i < n; i+= 1){
+                Mahasiswa temp = arr[i];
+                int j = i;  
+                if(arr[j] == null){
+                    continue;
+                }
+                for (j = i; j>=gap && arr[j-gap].getNim()>temp.getNim(); j-= gap){
+                    arr[j] = arr[j-gap];
+                }
+                arr[j] = temp;
+            }
+        }
+    }
+
+    public static void quickSort(Mahasiswa[] arr, int low, int high){
+        if(low < high){
+            int p = partition(arr, low, high);
+            quickSort(arr, low, p-1);
+            quickSort(arr, p+1, high);
+        }
+    }
+
+    static int partition(Mahasiswa[] arr, int low, int high){
+        int p = low, j;
+        for(j=low+1; j <= high; j++)
+            if(arr[j].getNim()<arr[low].getNim())
+                swap(arr, ++p, j);
+    
+        swap(arr, low, p);
+        return p;
+    }
+
+    static void swap(Mahasiswa[] arr, int low, int pivot){
+        Mahasiswa tmp = arr[low];
+        arr[low] = arr[pivot];
+        arr[pivot] = tmp;
     }
     public static void main(String[] args) {
         while(true) {
             pilihMenu();
             switch(pilihan) {
             case 1:
-            System.out.println(pilihan);
             tambahData();
             break;
             case 2:
-            System.out.println(pilihan);
             lihatData();
             break;
             case 3:
-            System.out.println(pilihan);
             urutkanData();
             break;
             case 4:
-            System.out.println(pilihan);
+            cariData();
+            break;
+            case 5:
+            editData();
+            break;
+            case 6:
+            hapusData();
+            break;
+            case 7:
             System.exit(0);
             break;
             default:
@@ -94,4 +286,4 @@ public static int jumlahData = 0;
                     }
                 }
             }
-    }
+}

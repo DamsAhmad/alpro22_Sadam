@@ -6,7 +6,7 @@ public class Mahasiswa {
         this.nim = nim;
     }
 
-    public int getNim(){
+    public long getNim(){
         return this.nim;
     }
 
