@@ -43,19 +43,78 @@ public static int jumlahData = 0;
         int i = 0;
         while(i<jumlahData){
             System.out.println("--------------------------------------"); 
-            System.out.println("\nnama:" + mahasiswa[i].getNama()); 
-            System.out.println("nim:" + mahasiswa[i].getNim()); 
+            System.out.println("Data ke-"+(i+1)); 
+            System.out.println("\nNama:" + mahasiswa[i].getNama()); 
+            System.out.println("NIM:" + mahasiswa[i].getNim()); 
             System.out.println("--------------------------------------"); 
             i++;
         }
     }
 
     public static void editData() {
+        long nim;
+        String nama;
 
+        System.out.print("\nData Ke Berapa Yang Ingin Diedit? : ");
+        int index = scan.nextInt();
+        scan.nextLine();
+        
+        System.out.println("--------------------------------------"); 
+        System.out.print("Data Yang Akan Diedit : ");
+        System.out.println("\nNama : "+ mahasiswa[index-1].getNama());
+        System.out.println("NIM : "+ mahasiswa[index-1].getNim());
+        System.out.print("\nEdit Data Tersebut? (y/n) : ");
+        String opsi =scan.next();
+        System.out.println("--------------------------------------");
+        scan.nextLine();
+        switch (opsi) {
+            case "y":
+            System.out.print("\nNama : ");
+            nama = scan.nextLine();
+    
+            System.out.print("NIM : ");
+            nim = scan.nextLong();
+            scan.nextLine();
+    
+            mahasiswa[index - 1].setNim(nim);
+            mahasiswa[index - 1].setNama(nama);
+    
+            System.out.println();
+            break;
+        
+            case "n":
+            editData();
+            break;
+        }  
     }
 
     public static void hapusData() {
+        System.out.print("\nData Ke Berapa Yang Ingin Dihapus? : ");
+        int index = scan.nextInt();
+        scan.nextLine();
 
+        System.out.println("--------------------------------------"); 
+        System.out.print("\nData Yang Akan Dihapus : ");
+        System.out.println("\nNama : "+ mahasiswa[index-1].getNama());
+        System.out.println("NIM : "+ mahasiswa[index-1].getNim());
+        System.out.print("\nHapus Data Tersebut? (y/n) : ");
+        String opsi =scan.next();
+        System.out.println("--------------------------------------");
+        scan.nextLine();
+        switch (opsi) {
+            case "y":
+            for(int i = index; i < jumlahData; i++) {
+                mahasiswa[index - 1].setNim(mahasiswa[index].getNim());
+                mahasiswa[index - 1].setNama(mahasiswa[index].getNama());
+            }
+            break;
+    
+            case "n":
+            hapusData();;
+            break;
+        }  
+        jumlahData -= 1;
+        System.out.println();
     }
 
 

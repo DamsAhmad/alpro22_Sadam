@@ -1,8 +1,8 @@
 public class Mahasiswa {
-    private int nim;
+    private long nim;
     private String nama;
 
-    public void setNim(int nim){
+    public void setNim(long nim){
         this.nim = nim;
     }
 
